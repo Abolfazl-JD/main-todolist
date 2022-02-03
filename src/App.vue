@@ -1,35 +1,7 @@
 <template>
   <v-app>
     <v-main>
-      <div class="header d-none d-sm-block">
-        <v-img
-          v-if="$vuetify.theme.dark"
-          src="./assets/images/bg-desktop-light.jpg"
-          width="100%"
-          class="header-pic"
-        ></v-img>
-        <v-img
-          v-else
-          src="./assets/images/bg-desktop-dark.jpg"
-          width="100%"
-          class="header-pic"
-        ></v-img>
-      </div>
-      <div class="header d-sm-none">
-        <v-img
-          v-if="$vuetify.theme.dark"
-          src="./assets/images/bg-mobile-light.jpg"
-          width="100%"
-          class="header-pic"
-        ></v-img>
-        <v-img
-          v-else
-          src="./assets/images/bg-mobile-dark.jpg"
-          width="100%"
-          class="header-pic"
-        ></v-img>
-      </div>
-
+      <HeaderPic />
       <v-card
         width="576"
         class="mx-auto todo-card px-5"
@@ -201,12 +173,18 @@
 </template>
 
 <script>
+import HeaderPic from "@/components/HeaderPic.vue";
+
 export default {
   name: "App",
 
   data: () => ({
     newTodo: "",
   }),
+
+  components: {
+    HeaderPic,
+  },
 };
 </script>
 
