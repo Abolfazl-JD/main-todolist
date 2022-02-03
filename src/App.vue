@@ -22,40 +22,11 @@
             ></v-text-field>
             <v-list flat subheader color="todolistColor rounded" elevation="12">
               <v-list-item-group multiple active-class="">
-                <v-list-item class="list-item py-2 pl-6">
-                  <template v-slot:default="{ active }">
-                    <v-list-item-action>
-                      <span class="checkbox-wrapper pointer">
-                        <div
-                          class="circle d-flex justify-center align-center circleColor"
-                          :class="{ gradient: active }"
-                        >
-                          <v-img
-                            :src="require('./assets/images/icon-check.svg')"
-                            class="check-icon"
-                            v-show="active"
-                            width="14"
-                          ></v-img>
-                          <div
-                            class="inside-hole todolistColor"
-                            :class="{ gradient: active }"
-                          ></div>
-                        </div>
-                      </span>
-                    </v-list-item-action>
-
-                    <v-list-item-content class="d-flex">
-                      <v-list-item-title>home chores</v-list-item-title>
-                    </v-list-item-content>
-                    <v-spacer></v-spacer>
-                    <span class="list-item-icons hidden-md-and-up">
-                      <v-icon class="list-item-icon pointer mr-3"
-                        >mdi-pencil</v-icon
-                      >
-                      <v-icon class="list-item-icon pointer">mdi-close</v-icon>
-                    </span>
-                  </template>
-                </v-list-item>
+                <TodoItem
+                  v-for="workTodo of todoList"
+                  :key="workTodo.id"
+                  :workTodo="workTodo"
+                />
               </v-list-item-group>
               <TodoInfo />
             </v-list>
@@ -81,18 +52,27 @@
 import HeaderPic from "@/components/HeaderPic.vue";
 import HeaderTitle from "@/components/HeaderTitle.vue";
 import TodoInfo from "@/components/TodoInfo.vue";
+import TodoItem from "@/components/TodoItem.vue";
+import { mapState } from "vuex";
 
 export default {
   name: "App",
 
-  data: () => ({
-    newTodo: "",
-  }),
+  data() {
+    return {
+      newTodo: "",
+    };
+  },
+
+  computed: {
+    ...mapState(["todoList"]),
+  },
 
   components: {
     HeaderPic,
     HeaderTitle,
     TodoInfo,
+    TodoItem,
   },
 };
 </script>
@@ -104,6 +84,15 @@ html,
 body {
   overflow: auto !important;
   font-size: 18px;
+}
+
+a {
+  text-decoration: none;
+  color: #777a92 !important;
+}
+
+h1 {
+  letter-spacing: 20px;
 }
 
 .font-small {
@@ -118,66 +107,8 @@ body {
   font-family: "Josefin", sans-serif !important;
 }
 
-a {
-  text-decoration: none;
-  color: #777a92 !important;
-}
-
-h1 {
-  letter-spacing: 20px;
-}
-
 .todo-card {
   margin-top: -260px;
-}
-
-.checkbox-wrapper {
-  position: relative;
-}
-
-.circle {
-  width: 1.5rem;
-  height: 1.5rem;
-  border-radius: 50%;
-}
-
-.circle:hover {
-  background: linear-gradient(90deg, #57ddff, #c058f3);
-}
-
-.inside-hole {
-  width: 1.25rem;
-  height: 1.25rem;
-  border-radius: 50%;
-  position: absolute;
-  margin: auto;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-}
-
-.check-icon {
-  position: absolute !important;
-  z-index: 1000 !important;
-}
-
-.gradient {
-  background: linear-gradient(90deg, #57ddff, #c058f3);
-}
-
-.list-item {
-  border-bottom: 1px solid var(--v-greyBorder-base);
-  cursor: context-menu !important;
-}
-
-.list-item:hover .list-item-icons {
-  display: flex !important;
-}
-
-.list-item-icon {
-  font-size: 30px !important;
-  color: #616161 !important;
 }
 
 .theme--light.v-icon:focus::after {
