@@ -9,22 +9,7 @@
         color="transparent"
       >
         <v-container>
-          <v-row>
-            <v-col>
-              <h1 class="white--text">TODO</h1>
-            </v-col>
-            <v-col class="text-right d-flex justify-end">
-              <v-icon
-                @click="$vuetify.theme.dark = !$vuetify.theme.dark"
-                color="yellow"
-                >{{
-                  $vuetify.theme.dark
-                    ? "mdi-white-balance-sunny"
-                    : "mdi-weather-night"
-                }}</v-icon
-              >
-            </v-col>
-          </v-row>
+          <HeaderTitle />
           <v-card-text class="mt-5 px-0">
             <v-text-field
               solo
@@ -174,6 +159,7 @@
 
 <script>
 import HeaderPic from "@/components/HeaderPic.vue";
+import HeaderTitle from "@/components/HeaderTitle.vue";
 
 export default {
   name: "App",
@@ -184,6 +170,7 @@ export default {
 
   components: {
     HeaderPic,
+    HeaderTitle,
   },
 };
 </script>
