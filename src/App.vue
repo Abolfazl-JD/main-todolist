@@ -57,6 +57,7 @@
                   </template>
                 </v-list-item>
               </v-list-item-group>
+              <TodoInfo />
             </v-list>
           </v-card-text>
           <p class="mt-13 body-2 text-center grey--text">
@@ -79,6 +80,7 @@
 <script>
 import HeaderPic from "@/components/HeaderPic.vue";
 import HeaderTitle from "@/components/HeaderTitle.vue";
+import TodoInfo from "@/components/TodoInfo.vue";
 
 export default {
   name: "App",
@@ -90,6 +92,7 @@ export default {
   components: {
     HeaderPic,
     HeaderTitle,
+    TodoInfo,
   },
 };
 </script>
