@@ -25,7 +25,7 @@
                 <v-list-item class="list-item py-2 pl-6">
                   <template v-slot:default="{ active }">
                     <v-list-item-action>
-                      <span class="checkbox-wrapper">
+                      <span class="checkbox-wrapper pointer">
                         <div
                           class="circle d-flex justify-center align-center circleColor"
                           :class="{ gradient: active }"
@@ -49,95 +49,14 @@
                     </v-list-item-content>
                     <v-spacer></v-spacer>
                     <span class="list-item-icons hidden-md-and-up">
-                      <v-icon class="list-item-icon mr-3">mdi-pencil</v-icon>
-                      <v-icon class="list-item-icon">mdi-close</v-icon>
-                    </span>
-                  </template>
-                </v-list-item>
-
-                <v-list-item class="list-item py-2 pl-6">
-                  <template v-slot:default="{ active }">
-                    <v-list-item-action>
-                      <span class="checkbox-wrapper">
-                        <div
-                          class="circle d-flex justify-center align-center circleColor"
-                          :class="{ gradient: active }"
-                        >
-                          <v-img
-                            :src="require('./assets/images/icon-check.svg')"
-                            class="check-icon"
-                            v-show="active"
-                            width="14"
-                          ></v-img>
-                          <div
-                            class="inside-hole todolistColor"
-                            :class="{ gradient: active }"
-                          ></div>
-                        </div>
-                      </span>
-                    </v-list-item-action>
-
-                    <v-list-item-content>
-                      <v-list-item-title>Sound</v-list-item-title>
-                    </v-list-item-content>
-                    <v-spacer></v-spacer>
-                    <span class="list-item-icons hidden-md-and-up">
-                      <v-icon class="list-item-icon mr-3">mdi-pencil</v-icon>
-                      <v-icon class="list-item-icon">mdi-close</v-icon>
-                    </span>
-                  </template>
-                </v-list-item>
-
-                <v-list-item class="list-item py-2 pl-6">
-                  <template v-slot:default="{ active }">
-                    <v-list-item-action>
-                      <span class="checkbox-wrapper">
-                        <div
-                          class="circle d-flex justify-center align-center circleColor"
-                          :class="{ gradient: active }"
-                        >
-                          <v-img
-                            :src="require('./assets/images/icon-check.svg')"
-                            class="check-icon"
-                            v-show="active"
-                            width="14"
-                          ></v-img>
-                          <div
-                            class="inside-hole todolistColor"
-                            :class="{ gradient: active }"
-                          ></div>
-                        </div>
-                      </span>
-                    </v-list-item-action>
-
-                    <v-list-item-content>
-                      <v-list-item-title>going to work</v-list-item-title>
-                    </v-list-item-content>
-                    <v-spacer></v-spacer>
-                    <span class="list-item-icons hidden-md-and-up">
-                      <v-icon class="list-item-icon mr-3">mdi-pencil</v-icon>
-                      <v-icon class="list-item-icon">mdi-close</v-icon>
+                      <v-icon class="list-item-icon pointer mr-3"
+                        >mdi-pencil</v-icon
+                      >
+                      <v-icon class="list-item-icon pointer">mdi-close</v-icon>
                     </span>
                   </template>
                 </v-list-item>
               </v-list-item-group>
-              <v-row class="pt-2 px-6 todo-info">
-                <v-col cols="3 d-none d-lg-block">
-                  <span>1 item left</span>
-                </v-col>
-                <v-col
-                  class="text-center align-content-center font-weight-bold mx-auto"
-                  sm="12"
-                  md="6"
-                >
-                  <span class="mr-5 pointer">All</span>
-                  <span class="mr-5 pointer">Active</span>
-                  <span class="pointer">Completed</span>
-                </v-col>
-                <v-col class="text-right" cols="3 d-none d-lg-block">
-                  <span class="font-small">clear completed</span>
-                </v-col>
-              </v-row>
             </v-list>
           </v-card-text>
           <p class="mt-13 body-2 text-center grey--text">
@@ -210,7 +129,6 @@ h1 {
 }
 
 .checkbox-wrapper {
-  cursor: pointer;
   position: relative;
 }
 
@@ -250,10 +168,6 @@ h1 {
   cursor: context-menu !important;
 }
 
-// .list-item-icons {
-//   display: none;
-// }
-
 .list-item:hover .list-item-icons {
   display: flex !important;
 }
@@ -261,11 +175,6 @@ h1 {
 .list-item-icon {
   font-size: 30px !important;
   color: #616161 !important;
-  cursor: pointer;
-}
-
-.todo-info span {
-  color: #777a92;
 }
 
 .theme--light.v-icon:focus::after {
