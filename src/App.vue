@@ -275,10 +275,4 @@ h1 {
 .theme--dark.v-icon:focus::after {
   opacity: 0 !important;
 }
-
-@media (max-width: 820px) {
-  .header-pic {
-    padding-top: 100px;
-  }
-}
 </style>

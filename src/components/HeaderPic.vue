@@ -30,3 +30,11 @@
     </div>
   </div>
 </template>
+
+<style scoped>
+@media (max-width: 820px) {
+  .header-pic {
+    padding-top: 100px;
+  }
+}
+</style>
