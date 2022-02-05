@@ -21,14 +21,32 @@
               @keydown.enter="createNewItem"
             ></v-text-field>
             <v-list flat subheader color="todolistColor rounded" elevation="12">
-              <v-list-item-group multiple active-class="">
+              <v-list-item-group multiple v-if="showItems === 'all'">
                 <TodoItem
                   v-for="workTodo of todoList"
                   :key="workTodo.id"
                   :workTodo="workTodo"
                 />
               </v-list-item-group>
-              <TodoInfo />
+              <v-list-item-group multiple v-if="showItems === 'active'">
+                <TodoItem
+                  v-for="workTodo of activeItems"
+                  :key="workTodo.id"
+                  :workTodo="workTodo"
+                />
+              </v-list-item-group>
+              <v-list-item-group multiple v-if="showItems === 'completed'">
+                <TodoItem
+                  v-for="workTodo of doneItems"
+                  :key="workTodo.id"
+                  :workTodo="workTodo"
+                />
+              </v-list-item-group>
+              <TodoInfo
+                :showItems="showItems"
+                :leftItem="activeItems.length"
+                @switchItemsShow="toggleList"
+              />
             </v-list>
           </v-card-text>
           <p class="mt-13 body-2 text-center grey--text">
@@ -61,11 +79,18 @@ export default {
   data() {
     return {
       newTodo: "",
+      showItems: "all",
     };
   },
 
   computed: {
     ...mapState(["todoList"]),
+    activeItems() {
+      return this.todoList.filter((item) => !item.completed);
+    },
+    doneItems() {
+      return this.todoList.filter((item) => item.completed);
+    },
   },
 
   components: {
@@ -83,6 +108,10 @@ export default {
     createNewItem() {
       this.$store.dispatch("createNewWorkTodo", this.newTodo);
       this.newTodo = "";
+    },
+
+    toggleList(status) {
+      this.showItems = status;
     },
   },
 };
