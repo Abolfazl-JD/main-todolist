@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const apiClient = axios.create({
-  baseURL: "https://my-json-server.typicode.com/Code-Pop/Real-World_Vue-3",
+  baseURL: "https://my-json-server.typicode.com/abolfazl-hue/main-todolist",
   withCredentials: false,
   headers: {
     Accept: "application/json",
@@ -10,10 +10,23 @@ const apiClient = axios.create({
 });
 
 export default {
-  getEvents(perPage, page) {
-    return apiClient.get("/events?_limit=" + perPage + "&_page=" + page);
+  getWorks() {
+    return apiClient.get("/todoList");
   },
-  getSingleEvent(id) {
-    return apiClient.get(`/events/${id}`);
+  addWork(item) {
+    return apiClient.post("/todoList", item);
+  },
+  changeStatus(workTodo) {
+    return apiClient.put(`/todoList/${workTodo.id}`, {
+      name: workTodo.name,
+      completed: !workTodo.completed,
+      id: workTodo.id,
+    });
+  },
+  deleteTodo(id) {
+    return apiClient.delete(`/todolist/${id}`);
+  },
+  changeItem(item) {
+    return apiClient.put(`/todoList/${item.id}`, item);
   },
 };

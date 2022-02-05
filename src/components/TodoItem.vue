@@ -1,7 +1,7 @@
 <template>
   <v-list-item class="list-item py-2 pl-6">
     <v-list-item-action>
-      <span class="checkbox-wrapper pointer">
+      <span class="checkbox-wrapper pointer" @click="toggleCompleted">
         <div
           class="circle d-flex justify-center align-center circleColor"
           :class="{ gradient: workTodo.completed }"
@@ -21,12 +21,22 @@
     </v-list-item-action>
 
     <v-list-item-content class="d-flex">
-      <v-list-item-title>{{ workTodo.name }}</v-list-item-title>
+      <v-list-item-title
+        ><span v-show="!editenability">{{ workTodo.name }}</span>
+        <v-text-field
+          v-model="workTodo.name"
+          v-show="editenability"
+          @keydown.enter="edit"
+          autofocus
+        ></v-text-field>
+      </v-list-item-title>
     </v-list-item-content>
     <v-spacer></v-spacer>
     <span class="list-item-icons hidden-md-and-up">
-      <v-icon class="list-item-icon pointer mr-3">mdi-pencil</v-icon>
-      <v-icon class="list-item-icon pointer">mdi-close</v-icon>
+      <v-icon class="list-item-icon pointer mr-3" @click="editenability = true"
+        >mdi-pencil</v-icon
+      >
+      <v-icon class="list-item-icon pointer" @click="remove">mdi-close</v-icon>
     </span>
   </v-list-item>
 </template>
@@ -37,6 +47,27 @@ export default {
     workTodo: {
       type: Object,
       required: true,
+    },
+  },
+
+  data() {
+    return {
+      editenability: false,
+    };
+  },
+
+  methods: {
+    toggleCompleted() {
+      this.$store.dispatch("changeStatus", this.workTodo);
+    },
+
+    remove() {
+      this.$store.dispatch("deleteItem", this.workTodo.id);
+    },
+
+    edit() {
+      this.editenability = false;
+      this.$store.dispatch("editItem", this.workTodo);
     },
   },
 };

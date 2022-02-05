@@ -18,7 +18,7 @@
               label="create a new todo..."
               v-model="newTodo"
               height="60"
-              class="forminp"
+              @keydown.enter="createNewItem"
             ></v-text-field>
             <v-list flat subheader color="todolistColor rounded" elevation="12">
               <v-list-item-group multiple active-class="">
@@ -73,6 +73,17 @@ export default {
     HeaderTitle,
     TodoInfo,
     TodoItem,
+  },
+
+  mounted() {
+    this.$store.dispatch("getTodoList");
+  },
+
+  methods: {
+    createNewItem() {
+      this.$store.dispatch("createNewWorkTodo", this.newTodo);
+      this.newTodo = "";
+    },
   },
 };
 </script>
