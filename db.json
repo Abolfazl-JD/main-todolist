@@ -1,0 +1,19 @@
+{
+  "todoList": [
+    {
+      "name": "going to work",
+      "completed": false,
+      "id": "vgbhjk5475863"
+    },
+    {
+      "name": "cleaning the home",
+      "completed": false,
+      "id": "he130r47"
+    },
+    {
+      "name": "washing the dishes",
+      "completed": false,
+      "id": "mpdj8g7gg"
+    }
+  ]
+}
