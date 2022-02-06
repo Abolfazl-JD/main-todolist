@@ -29,7 +29,13 @@
                 ></v-text-field>
               </v-col>
             </v-row>
-            <v-list flat subheader color="todolistColor rounded" elevation="12">
+            <v-list
+              flat
+              subheader
+              color="todolistColor rounded"
+              elevation="12"
+              v-if="todoList.length"
+            >
               <v-list-item-group multiple>
                 <TodoItem
                   v-for="workTodo of filteredTodos"
@@ -44,19 +50,19 @@
               />
             </v-list>
           </v-card-text>
-          <p class="mt-13 body-2 text-center grey--text">
-            Drag and Drop to render list
-          </p>
-          <div class="mt-12 text-center font-small">
-            <span>Challenged by </span>
-            <a href="https://www.frontendmentor.io?ref=challenge"
-              >frontendmentor
-            </a>
-            <span>Coded by </span>
-            <a href="https://github.com/abolfazl-hue">Abolfazl Jalildoost</a>
-          </div>
         </v-container>
       </v-card>
+      <p class="mt-13 body-2 text-center grey--text">
+        Drag and Drop to render list
+      </p>
+      <div class="mt-12 text-center font-small">
+        <span>Challenged by </span>
+        <a href="https://www.frontendmentor.io?ref=challenge"
+          >frontendmentor
+        </a>
+        <span>Coded by </span>
+        <a href="https://github.com/abolfazl-hue">Abolfazl Jalildoost</a>
+      </div>
     </v-main>
   </v-app>
 </template>
