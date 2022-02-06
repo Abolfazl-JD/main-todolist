@@ -27,6 +27,12 @@ export default new Vuex.Store({
     DELETE_TODO(state, id) {
       state.todoList = state.todoList.filter((item) => item.id !== id);
     },
+
+    CHECK_ALL(state, value) {
+      for (const item of state.todoList) {
+        item.completed = value;
+      }
+    },
   },
 
   actions: {

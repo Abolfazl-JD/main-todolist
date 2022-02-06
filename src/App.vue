@@ -11,15 +11,24 @@
         <v-container>
           <HeaderTitle />
           <v-card-text class="mt-5 px-0">
-            <v-text-field
-              solo
-              flat
-              background-color="todolistColor"
-              label="create a new todo..."
-              v-model="newTodo"
-              height="60"
-              @keydown.enter="createNewItem"
-            ></v-text-field>
+            <v-row>
+              <v-col cols="1" class="todolistColor icon-form">
+                <v-icon class="mt-1 pointer" @click="checkAll"
+                  >mdi-chevron-down</v-icon
+                >
+              </v-col>
+              <v-col cols="11">
+                <v-text-field
+                  solo
+                  flat
+                  background-color="todolistColor"
+                  label="create a new todo..."
+                  v-model="newTodo"
+                  height="60"
+                  @keydown.enter="createNewItem"
+                ></v-text-field>
+              </v-col>
+            </v-row>
             <v-list flat subheader color="todolistColor rounded" elevation="12">
               <v-list-item-group multiple>
                 <TodoItem
@@ -58,6 +67,7 @@ import HeaderTitle from "@/components/HeaderTitle.vue";
 import TodoInfo from "@/components/TodoInfo.vue";
 import TodoItem from "@/components/TodoItem.vue";
 import { mapState } from "vuex";
+import { uuid } from "./store/utils";
 
 export default {
   name: "App",
@@ -66,6 +76,7 @@ export default {
     return {
       newTodo: "",
       visibility: "all",
+      toggleAll: true,
     };
   },
 
@@ -88,18 +99,27 @@ export default {
     TodoItem,
   },
 
-  mounted() {
-    this.$store.dispatch("getTodoList");
-  },
+  // mounted() {
+  //   this.$store.dispatch("getTodoList");
+  // },
 
   methods: {
     createNewItem() {
-      this.$store.dispatch("createNewWorkTodo", this.newTodo);
+      this.$store.commit("ADD_TODO", {
+        name: this.newTodo,
+        id: uuid(),
+        completed: false,
+      });
       this.newTodo = "";
     },
 
     toggleList(status) {
       this.visibility = status;
+    },
+
+    checkAll() {
+      this.$store.commit("CHECK_ALL", this.toggleAll);
+      this.toggleAll = !this.toggleAll;
     },
   },
 };
@@ -137,6 +157,14 @@ h1 {
 
 .todo-card {
   margin-top: -260px;
+}
+
+.icon-form {
+  position: relative;
+  height: 60px;
+  top: 12px;
+  right: -14px;
+  border-radius: 10px 0px 0px 8px;
 }
 
 .theme--light.v-icon:focus::after {

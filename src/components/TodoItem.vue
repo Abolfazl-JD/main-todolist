@@ -58,16 +58,15 @@ export default {
 
   methods: {
     toggleCompleted() {
-      this.$store.dispatch("changeStatus", this.workTodo);
+      this.$store.commit("CHAGE_STATUS", this.workTodo);
     },
 
     remove() {
-      this.$store.dispatch("deleteItem", this.workTodo.id);
+      this.$store.commit("DELETE_TODO", this.workTodo.id);
     },
 
     edit() {
       this.editenability = false;
-      this.$store.dispatch("editItem", this.workTodo);
     },
   },
 };

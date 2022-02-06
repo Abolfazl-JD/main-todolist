@@ -1,7 +1,7 @@
 <template>
   <v-row class="pt-2 px-6 todo-info">
     <v-col cols="3 d-none d-lg-block">
-      <span class="font-small">{{ leftItem }} item left</span>
+      <span class="font-small">{{ pluralize }} left</span>
     </v-col>
     <v-col
       class="text-center align-content-center font-weight-bold mx-auto"
@@ -10,25 +10,25 @@
     >
       <span
         class="mr-5 pointer font-small"
-        :class="visibility === 'all' ? 'primary--text' : ''"
+        :class="{ 'primary--text': visibility === 'all' }"
         @click="changeItemShow('all')"
         >All</span
       >
       <span
         class="mr-5 pointer font-small"
-        :class="visibility === 'active' ? 'primary--text' : ''"
+        :class="{ 'primary--text': visibility === 'active' }"
         @click="changeItemShow('active')"
         >Active</span
       >
       <span
         class="pointer font-small"
-        :class="visibility === 'completed' ? 'primary--text' : ''"
+        :class="{ 'primary--text': visibility === 'completed' }"
         @click="changeItemShow('completed')"
         >Completed</span
       >
     </v-col>
     <v-col class="text-right" cols="3 d-none d-lg-block">
-      <span class="font-small">clear completed</span>
+      <span class="font-small pointer" @click="clearAll">clear completed</span>
     </v-col>
   </v-row>
 </template>
@@ -50,6 +50,16 @@ export default {
   methods: {
     changeItemShow(status) {
       this.$emit("switchItemsShow", status);
+    },
+
+    clearAll() {
+      this.$store.commit("CHECK_ALL", false);
+    },
+  },
+
+  computed: {
+    pluralize() {
+      return `${this.leftItem} item${this.leftItem === 1 ? "" : "s"}`;
     },
   },
 };
