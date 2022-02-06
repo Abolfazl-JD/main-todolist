@@ -10,19 +10,19 @@
     >
       <span
         class="mr-5 pointer font-small"
-        :class="showItems === 'all' ? 'primary--text' : ''"
+        :class="visibility === 'all' ? 'primary--text' : ''"
         @click="changeItemShow('all')"
         >All</span
       >
       <span
         class="mr-5 pointer font-small"
-        :class="showItems === 'active' ? 'primary--text' : ''"
+        :class="visibility === 'active' ? 'primary--text' : ''"
         @click="changeItemShow('active')"
         >Active</span
       >
       <span
         class="pointer font-small"
-        :class="showItems === 'completed' ? 'primary--text' : ''"
+        :class="visibility === 'completed' ? 'primary--text' : ''"
         @click="changeItemShow('completed')"
         >Completed</span
       >
@@ -36,7 +36,7 @@
 <script>
 export default {
   props: {
-    showItems: {
+    visibility: {
       type: String,
       required: true,
     },

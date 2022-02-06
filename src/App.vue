@@ -21,29 +21,15 @@
               @keydown.enter="createNewItem"
             ></v-text-field>
             <v-list flat subheader color="todolistColor rounded" elevation="12">
-              <v-list-item-group multiple v-if="showItems === 'all'">
+              <v-list-item-group multiple>
                 <TodoItem
-                  v-for="workTodo of todoList"
-                  :key="workTodo.id"
-                  :workTodo="workTodo"
-                />
-              </v-list-item-group>
-              <v-list-item-group multiple v-if="showItems === 'active'">
-                <TodoItem
-                  v-for="workTodo of activeItems"
-                  :key="workTodo.id"
-                  :workTodo="workTodo"
-                />
-              </v-list-item-group>
-              <v-list-item-group multiple v-if="showItems === 'completed'">
-                <TodoItem
-                  v-for="workTodo of doneItems"
+                  v-for="workTodo of filteredTodos"
                   :key="workTodo.id"
                   :workTodo="workTodo"
                 />
               </v-list-item-group>
               <TodoInfo
-                :showItems="showItems"
+                :visibility="visibility"
                 :leftItem="activeItems.length"
                 @switchItemsShow="toggleList"
               />
@@ -79,7 +65,7 @@ export default {
   data() {
     return {
       newTodo: "",
-      showItems: "all",
+      visibility: "all",
     };
   },
 
@@ -88,8 +74,10 @@ export default {
     activeItems() {
       return this.todoList.filter((item) => !item.completed);
     },
-    doneItems() {
-      return this.todoList.filter((item) => item.completed);
+    filteredTodos() {
+      if (this.visibility === "all") return this.todoList;
+      else if (this.visibility === "active") return this.activeItems;
+      else return this.todoList.filter((item) => item.completed);
     },
   },
 
@@ -111,7 +99,7 @@ export default {
     },
 
     toggleList(status) {
-      this.showItems = status;
+      this.visibility = status;
     },
   },
 };
