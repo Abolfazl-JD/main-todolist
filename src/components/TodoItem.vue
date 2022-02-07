@@ -27,6 +27,7 @@
           v-model="workTodo.name"
           v-show="editenability"
           @keydown.enter="edit"
+          @keydown.esc="editenability = false"
           autofocus
         ></v-text-field>
       </v-list-item-title>
