@@ -68,33 +68,33 @@
 </template>
 
 <script>
-import HeaderPic from "@/components/HeaderPic.vue";
-import HeaderTitle from "@/components/HeaderTitle.vue";
-import TodoInfo from "@/components/TodoInfo.vue";
-import TodoItem from "@/components/TodoItem.vue";
-import { mapState } from "vuex";
-import { uuid } from "./store/utils";
+import HeaderPic from '@/components/HeaderPic.vue'
+import HeaderTitle from '@/components/HeaderTitle.vue'
+import TodoInfo from '@/components/TodoInfo.vue'
+import TodoItem from '@/components/TodoItem.vue'
+import { mapState } from 'vuex'
+import { uuid } from './store/utils'
 
 export default {
-  name: "App",
+  name: 'App',
 
   data() {
     return {
-      newTodo: "",
-      visibility: "all",
+      newTodo: '',
+      visibility: 'all',
       toggleAll: true,
-    };
+    }
   },
 
   computed: {
-    ...mapState(["todoList"]),
+    ...mapState(['todoList']),
     activeItems() {
-      return this.todoList.filter((item) => !item.completed);
+      return this.todoList.filter((item) => !item.completed)
     },
     filteredTodos() {
-      if (this.visibility === "all") return this.todoList;
-      else if (this.visibility === "active") return this.activeItems;
-      else return this.todoList.filter((item) => item.completed);
+      if (this.visibility === 'all') return this.todoList
+      else if (this.visibility === 'active') return this.activeItems
+      else return this.todoList.filter((item) => item.completed)
     },
   },
 
@@ -111,28 +111,34 @@ export default {
 
   methods: {
     createNewItem() {
-      this.$store.commit("ADD_TODO", {
+      const todoItem = {
         name: this.newTodo,
         id: uuid(),
         completed: false,
-      });
-      this.newTodo = "";
+      }
+      this.$store.commit('ADD_TODO', todoItem)
+      this.$store.dispatch('saveTodo', todoItem)
+      this.newTodo = ''
     },
 
     toggleList(status) {
-      this.visibility = status;
+      this.visibility = status
     },
 
     checkAll() {
-      this.$store.commit("CHECK_ALL", this.toggleAll);
-      this.toggleAll = !this.toggleAll;
+      this.$store.dispatch('checkAll', this.toggleAll)
+      this.toggleAll = !this.toggleAll
     },
   },
-};
+
+  async created() {
+    await this.$store.dispatch('getTodoStore')
+  },
+}
 </script>
 
 <style lang="scss">
-@import url("https://fonts.googleapis.com/css2?family=Josefin:wght@500&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Josefin:wght@500&display=swap');
 
 html,
 body {
@@ -158,7 +164,7 @@ h1 {
 }
 
 .v-application {
-  font-family: "Josefin", sans-serif !important;
+  font-family: 'Josefin', sans-serif !important;
 }
 
 .todo-card {

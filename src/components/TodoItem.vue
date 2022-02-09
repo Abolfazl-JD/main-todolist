@@ -54,23 +54,26 @@ export default {
   data() {
     return {
       editenability: false,
-    };
+    }
   },
 
   methods: {
     toggleCompleted() {
-      this.$store.commit("CHAGE_STATUS", this.workTodo);
+      this.$store.commit('CHAGE_STATUS', this.workTodo)
+      this.$store.dispatch('saveTodo', this.workTodo)
     },
 
     remove() {
-      this.$store.commit("DELETE_TODO", this.workTodo.id);
+      this.$store.commit('DELETE_TODO', this.workTodo.id)
     },
 
     edit() {
-      this.editenability = false;
+      this.$store.commit('CHANGE_ITEM', this.workTodo)
+      this.$store.dispatch('saveTodo', this.workTodo)
+      this.editenability = false
     },
   },
-};
+}
 </script>
 
 <style scoped>

@@ -49,20 +49,20 @@ export default {
 
   methods: {
     changeItemShow(status) {
-      this.$emit("switchItemsShow", status);
+      this.$emit('switchItemsShow', status)
     },
 
     clearAll() {
-      this.$store.commit("CHECK_ALL", false);
+      this.$store.dispatch('checkAll', false)
     },
   },
 
   computed: {
     pluralize() {
-      return `${this.leftItem} item${this.leftItem === 1 ? "" : "s"}`;
+      return `${this.leftItem} item${this.leftItem === 1 ? '' : 's'}`
     },
   },
-};
+}
 </script>
 
 <style scoped>
