@@ -116,8 +116,10 @@ export default {
         id: uuid(),
         completed: false,
       }
-      this.$store.commit('ADD_TODO', todoItem)
-      this.$store.dispatch('saveTodo', todoItem)
+      this.$store.dispatch('saveTodo', {
+        todo: todoItem,
+        mutateName: 'ADD_TODO',
+      })
       this.newTodo = ''
     },
 

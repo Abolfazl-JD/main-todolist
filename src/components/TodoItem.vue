@@ -59,17 +59,22 @@ export default {
 
   methods: {
     toggleCompleted() {
-      this.$store.commit('CHAGE_STATUS', this.workTodo)
-      this.$store.dispatch('saveTodo', this.workTodo)
+      this.$store.dispatch('saveTodo', {
+        todo: this.workTodo,
+        mutateName: 'CHAGE_STATUS',
+      })
+      console.log(this.workTodo)
     },
 
     remove() {
-      this.$store.commit('DELETE_TODO', this.workTodo.id)
+      this.$store.dispatch('deleteTodo', this.workTodo.id)
     },
 
     edit() {
-      this.$store.commit('CHANGE_ITEM', this.workTodo)
-      this.$store.dispatch('saveTodo', this.workTodo)
+      this.$store.dispatch('saveTodo', {
+        todo: this.workTodo,
+        mutateName: 'CHANGE_ITEM',
+      })
       this.editenability = false
     },
   },

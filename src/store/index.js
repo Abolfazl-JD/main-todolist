@@ -18,7 +18,8 @@ export default new Vuex.Store({
     },
 
     CHAGE_STATUS(state, workTodo) {
-      workTodo.completed = !workTodo.completed
+      state.todoList.find((todo) => todo.id === workTodo.id).completed =
+        !workTodo.completed
     },
 
     ADD_TODO(state, item) {
@@ -41,34 +42,21 @@ export default new Vuex.Store({
   },
 
   actions: {
-    async changeStatus({ commit }, workTodo) {
-      const res = await EventService.changeStatus(workTodo)
-      commit('CHAGE_STATUS', workTodo)
-      console.log(res.data)
-    },
-
-    createNewWorkTodo({ commit }, newTodo) {
-      EventService.addWork({
-        name: newTodo,
-        completed: false,
-        id: uuid(),
-      }).then((res) => {
-        console.log(res.data)
-        commit('ADD_TODO', res.data)
-      })
-    },
-
-    deleteItem({ commit }, id) {
-      EventService.deleteTodo(id).then(() => {
-        commit('DELETE_TODO', id)
-      })
-    },
-
     checkAll({ commit, state, dispatch }, value) {
       commit('CHECK_ALL', value)
       for (const todoItem of state.todoList) {
         dispatch('saveTodo', todoItem)
       }
+    },
+
+    removeDoneItems({ state, dispatch }) {
+      state.todoList = state.todoList.filter((item) => {
+        if (item.completed) {
+          dispatch('deleteTodo', item.id)
+        } else {
+          return !item.completed
+        }
+      })
     },
 
     async getTodoStore({ state, dispatch, commit }) {
@@ -98,7 +86,8 @@ export default new Vuex.Store({
       }).then((data) => commit('SET_TODOWRKS', data))
     },
 
-    async saveTodo({ state, dispatch }, todo) {
+    async saveTodo({ state, dispatch, commit }, { todo, mutateName }) {
+      commit(mutateName, todo)
       state.database = await dispatch('getDatabase')
 
       return new Promise((resolve, reject) => {
@@ -108,6 +97,24 @@ export default new Vuex.Store({
         store.put(todo)
         transaction.oncomplete = () => {
           resolve('Item successfully saved')
+        }
+        transaction.onerror = (event) => {
+          reject(event)
+        }
+      })
+    },
+
+    async deleteTodo({ state, commit, dispatch }, todoId) {
+      commit('DELETE_TODO', todoId)
+      state.database = await dispatch('getDatabase')
+
+      return new Promise((resolve, reject) => {
+        const transaction = state.database.transaction('todos', 'readwrite')
+        const store = transaction.objectStore('todos')
+
+        store.delete(todoId)
+        transaction.oncomplete = () => {
+          resolve('Item successfully deleted')
         }
         transaction.onerror = (event) => {
           reject(event)

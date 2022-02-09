@@ -28,7 +28,9 @@
       >
     </v-col>
     <v-col class="text-right" cols="3 d-none d-lg-block">
-      <span class="font-small pointer" @click="clearAll">clear completed</span>
+      <span class="font-small pointer" @click="clearDoneItems"
+        >clear completed</span
+      >
     </v-col>
   </v-row>
 </template>
@@ -52,8 +54,8 @@ export default {
       this.$emit('switchItemsShow', status)
     },
 
-    clearAll() {
-      this.$store.dispatch('checkAll', false)
+    clearDoneItems() {
+      this.$store.dispatch('removeDoneItems')
     },
   },
 
