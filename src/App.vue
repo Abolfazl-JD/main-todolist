@@ -13,7 +13,7 @@
           <v-card-text class="mt-5 px-0">
             <v-row>
               <v-col cols="1" class="todolistColor icon-form">
-                <v-icon class="mt-1 pointer" @click="checkAll"
+                <v-icon class="mt-1 pointer d-none d-lg-block" @click="checkAll"
                   >mdi-chevron-down</v-icon
                 >
               </v-col>
