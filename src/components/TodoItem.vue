@@ -62,7 +62,6 @@ export default {
         todo: this.workTodo,
         mutateName: 'CHAGE_STATUS',
       })
-      console.log(this.workTodo)
     },
 
     remove() {
