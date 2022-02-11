@@ -3,8 +3,7 @@
     <v-list-item-action class="item-action">
       <span class="checkbox-wrapper pointer" @click="toggleCompleted">
         <div
-          class="circle d-flex justify-center align-center circleColor"
-          :class="{ gradient: workTodo.completed }"
+          class="circle d-flex justify-center align-center circleColor gradient"
         >
           <v-img
             :src="require('../assets/images/icon-check.svg')"
