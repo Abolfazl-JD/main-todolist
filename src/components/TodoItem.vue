@@ -1,5 +1,5 @@
 <template>
-  <v-list-item class="list-item py-2">
+  <v-list-item class="list-item py-2" draggable @dragstart="pickUpTask($event)">
     <v-list-item-action class="item-action">
       <span class="checkbox-wrapper pointer" @click="toggleCompleted">
         <div
@@ -46,6 +46,11 @@ export default {
   props: {
     workTodo: {
       type: Object,
+      required: true,
+    },
+
+    taskIndex: {
+      type: Number,
       required: true,
     },
   },

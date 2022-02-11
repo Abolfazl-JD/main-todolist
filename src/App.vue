@@ -41,9 +41,10 @@
             >
               <v-list-item-group multiple>
                 <TodoItem
-                  v-for="workTodo of filteredTodos"
-                  :key="workTodo.id"
+                  v-for="(workTodo, taskIndex) of filteredTodos"
+                  :key="taskIndex"
                   :workTodo="workTodo"
+                  :taskIndex="taskIndex"
                 />
               </v-list-item-group>
               <TodoInfo
