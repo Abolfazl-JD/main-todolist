@@ -1,6 +1,6 @@
 <template>
-  <v-list-item class="list-item py-2 pl-6">
-    <v-list-item-action>
+  <v-list-item class="list-item py-2">
+    <v-list-item-action class="item-action">
       <span class="checkbox-wrapper pointer" @click="toggleCompleted">
         <div
           class="circle d-flex justify-center align-center circleColor"
@@ -20,7 +20,7 @@
       </span>
     </v-list-item-action>
 
-    <v-list-item-content class="d-flex">
+    <v-list-item-content class="d-flex overflow-visible">
       <v-list-item-title
         ><span v-show="!editenability">{{ workTodo.name }}</span>
         <v-text-field
@@ -129,5 +129,11 @@ export default {
 
 .gradient {
   background: linear-gradient(90deg, #57ddff, #c058f3);
+}
+
+@media (max-width: 500px) {
+  .item-action {
+    margin-right: 10px !important;
+  }
 }
 </style>
