@@ -77,7 +77,6 @@ import HeaderTitle from '@/components/HeaderTitle.vue'
 import TodoInfo from '@/components/TodoInfo.vue'
 import TodoItem from '@/components/TodoItem.vue'
 import { mapState } from 'vuex'
-import { uuid } from './store/utils'
 
 export default {
   name: 'App',
@@ -117,7 +116,7 @@ export default {
     createNewItem() {
       const todoItem = {
         name: this.newTodo,
-        id: uuid(),
+        id: this.todoList.length,
         completed: false,
       }
       this.$store.dispatch('saveTodo', {

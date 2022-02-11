@@ -1,8 +1,5 @@
-/* eslint-disable no-unused-vars */
 import Vue from 'vue'
 import Vuex from 'vuex'
-import { uuid } from './utils'
-import EventService from '../services/EventService'
 
 Vue.use(Vuex)
 
@@ -17,11 +14,6 @@ export default new Vuex.Store({
       state.todoList = items
     },
 
-    CHAGE_STATUS(state, workTodo) {
-      state.todoList.find((todo) => todo.id === workTodo.id).completed =
-        !workTodo.completed
-    },
-
     ADD_TODO(state, item) {
       state.todoList.push(item)
     },
@@ -31,7 +23,9 @@ export default new Vuex.Store({
     },
 
     CHANGE_ITEM(state, item) {
-      state.todoList.find((todo) => todo.name === item.name).name = item.name
+      let selectedItem = state.todoList.find((todo) => todo.id === item.id)
+      selectedItem.name = item.name
+      selectedItem.completed = item.completed
     },
 
     CHECK_ALL(state, value) {
@@ -45,7 +39,7 @@ export default new Vuex.Store({
     checkAll({ commit, state, dispatch }, value) {
       commit('CHECK_ALL', value)
       for (const todoItem of state.todoList) {
-        dispatch('saveTodo', todoItem)
+        dispatch('saveTodo', { todo: todoItem, mutateName: '' })
       }
     },
 
@@ -87,7 +81,7 @@ export default new Vuex.Store({
     },
 
     async saveTodo({ state, dispatch, commit }, { todo, mutateName }) {
-      commit(mutateName, todo)
+      mutateName ? commit(mutateName, todo) : null
       state.database = await dispatch('getDatabase')
 
       return new Promise((resolve, reject) => {

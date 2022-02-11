@@ -1,5 +1,13 @@
 <template>
-  <v-list-item class="list-item py-2" draggable @dragstart="pickUpTask($event)">
+  <v-list-item
+    :ripple="false"
+    class="list-item py-2"
+    draggable
+    @dragstart="pickUpTask($event)"
+    @drop="moveTask($event)"
+    @dragenter.prevent
+    @dragover.prevent
+  >
     <v-list-item-action class="item-action">
       <span class="checkbox-wrapper pointer" @click="toggleCompleted">
         <div
@@ -64,8 +72,8 @@ export default {
   methods: {
     toggleCompleted() {
       this.$store.dispatch('saveTodo', {
-        todo: this.workTodo,
-        mutateName: 'CHAGE_STATUS',
+        todo: { ...this.workTodo, completed: !this.workTodo.completed },
+        mutateName: 'CHANGE_ITEM',
       })
     },
 
@@ -79,6 +87,37 @@ export default {
         mutateName: 'CHANGE_ITEM',
       })
       this.editenability = false
+    },
+
+    pickUpTask(e) {
+      e.dataTransfer.effectAllowed = 'move'
+      e.dataTransfer.dropEffect = 'move'
+
+      e.dataTransfer.setData('from-task-id', this.workTodo.id)
+      e.dataTransfer.setData('from-task-name', this.workTodo.name)
+      e.dataTransfer.setData('from-task-done', this.workTodo.completed)
+    },
+    moveTask(e) {
+      let fromTaskId = e.dataTransfer.getData('from-task-id')
+      const fromTaskName = e.dataTransfer.getData('from-task-name')
+      const fromTaskCompleted = eval(e.dataTransfer.getData('from-task-done'))
+
+      this.$store.dispatch('saveTodo', {
+        todo: {
+          name: this.workTodo.name,
+          id: fromTaskId++,
+          completed: this.workTodo.completed,
+        },
+        mutateName: 'CHANGE_ITEM',
+      })
+      this.$store.dispatch('saveTodo', {
+        todo: {
+          name: fromTaskName,
+          id: this.workTodo.id,
+          completed: fromTaskCompleted,
+        },
+        mutateName: 'CHANGE_ITEM',
+      })
     },
   },
 }
